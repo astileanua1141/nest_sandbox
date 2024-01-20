@@ -20,6 +20,10 @@ export class UsersController {
   // getColor(@Session() session: any) {
   //   return session.color;
   // }
+  @Get('/whoami')
+  whoAmI(@Session() session: any) {
+    return this.usersService.findOne(session.userId);
+  }
 
   @Post('/signup')
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {

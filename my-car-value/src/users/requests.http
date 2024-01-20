@@ -19,6 +19,10 @@ Content-Type: application/json
   "password": "jupiter"
 }
 
+### Get currently singed in user
+GET http://localhost:3000/auth/whoami
+
+
 ### Find a particular user with a given ID 
 GET http://localhost:3000/auth/3
 
