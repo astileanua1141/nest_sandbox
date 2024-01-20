@@ -3,17 +3,20 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-  "email": "abc123456@test.com",
-  "password": "stringpwd"
+  "email": "cookie-test1@test.com",
+  "password": "jupiter"
 }
 
 ### Sign in a user
+### If the cookie is already set on the session (calling this after signup), 
+### it might seem like cookie is not sent, but it's actually not changed, 
+### so it gets ignored
 POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-  "email": "abc123456@test.com",
-  "password": "stringpwd"
+  "email": "cookie-test1@test.com",
+  "password": "jupiter"
 }
 
 ### Find a particular user with a given ID 
@@ -36,8 +39,8 @@ Content-Type: application/json
   "password": "PASS"
 }
 
-### Set a color 
-GET http://localhost:3000/auth/colors/redBlue
+# ### Set a color 
+# GET http://localhost:3000/auth/colors/redBlue
 
-### Get the color
-GET http://localhost:3000/auth/colors
+# ### Get the color
+# GET http://localhost:3000/auth/colors
