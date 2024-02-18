@@ -1,1 +1,3 @@
 my-car-value/db.sqlite
+my-car-value/test.sqlite
+.gitignore

@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { AppService } from './app.service';
@@ -10,12 +11,24 @@ import { Report } from './reports/report.entity';
 const cookieSession = require('cookie-session'); // old way to import, because of tsconfig
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
-    type: 'sqlite',
-    database: 'db.sqlite',
-    entities: [User, Report],
-    synchronize: true
-  }), UsersModule, ReportsModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}`
+    }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return {
+          type: 'sqlite',
+          database: config.get<string>('DB_NAME'),
+          syncronize: true,
+          entities: [User, Report],
+        }
+      }
+    }),
+    UsersModule, 
+    ReportsModule],
   controllers: [AppController],
   providers: [
     AppService,
@@ -32,6 +45,5 @@ export class AppModule {
       keys: ['asdeyfgd75nbs'] // this string is used to encypt the information inside the cookie
     }))
       .forRoutes('*');
-
   }
 }
